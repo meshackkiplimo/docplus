@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import  SubmitButton from "../SubmitButton"
+import { UserFormValidation } from "@/lib/validation";
+import {useRouter} from "next/navigation"
 import {
   Form,
   
@@ -27,17 +29,15 @@ export enum FormFieldType{
 }
 
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+
 const PatientForm = () => {
+  const router  = useRouter()
 const [isLoading,setIsLoading] = useState(false)
 
+
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email:"",
@@ -46,7 +46,22 @@ const [isLoading,setIsLoading] = useState(false)
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof UserFormValidation>) {
+    setIsLoading(true);
+    try {
+    //   const userData = {name,email,phone}
+    //  const user = await createUser(userData)
+    //  if (user) router.push(`/patients/${user.$id}/register`)
+      
+      
+      
+      
+    } catch (error) {
+      console.log(error)
+
+      
+    }
+
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
