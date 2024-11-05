@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form"
 import CustomFormFiled from "../CustomFormFiled"
 import { useState } from "react"
+import {createUser} from "@/lib/actions/patient.actions"
 
 export enum FormFieldType{
   INPUT ='input',
@@ -46,12 +47,12 @@ const [isLoading,setIsLoading] = useState(false)
   })
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof UserFormValidation>) {
+  async function onSubmit({name,email,phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
     try {
-    //   const userData = {name,email,phone}
-    //  const user = await createUser(userData)
-    //  if (user) router.push(`/patients/${user.$id}/register`)
+      const userData = {name,email,phone}
+      const user = await createUser(userData)
+     if (user) router.push(`/patients/${user.$id}/register`)
       
       
       
@@ -61,10 +62,11 @@ const [isLoading,setIsLoading] = useState(false)
 
       
     }
+    console.log('hey')
 
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    
   }
   return(
     <Form {...form}>
